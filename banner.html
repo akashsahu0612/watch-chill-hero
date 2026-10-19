@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Watch &amp; Chill banner</title>
+<!-- render source: banner.html#t=Title&s=Subtitle&n=01&i=play|check|star|ticket|bars -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@1,500&display=swap');
+:root{--ink:#0a090b;--velvet:#7d0f21;--velvet-2:#4a0812;--gold:#e9b949;--gold-hi:#ffe08a;--gold-lo:#a8761c;--ivory:#f4ecd8;--play:#e0243f}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:var(--ink);overflow:hidden}
+.b{position:relative;width:100vw;height:100vh;display:flex;align-items:center;gap:3vh;padding:0 4vh 0 7vh;overflow:hidden;
+  background:
+    radial-gradient(60% 140% at 12% 50%,rgba(125,15,33,.55),transparent 70%),
+    linear-gradient(90deg,#1b0c12 0%,#0f0b0f 35%,var(--ink) 100%)}
+/* velvet edge */
+.b::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3.2vh;
+  background:repeating-linear-gradient(90deg,var(--velvet-2) 0 25%,#a3162d 50%,var(--velvet-2) 75%);border-right:.25vh solid rgba(233,185,73,.55)}
+/* sprocket rows */
+.b::after{content:"";position:absolute;left:3.2vh;right:0;top:0;bottom:0;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,rgba(244,236,216,.16) 0 2.6vh,transparent 2.6vh 5vh) 0 1.6vh/100% 1.8vh no-repeat,
+    repeating-linear-gradient(90deg,rgba(244,236,216,.16) 0 2.6vh,transparent 2.6vh 5vh) 0 calc(100% - 1.6vh)/100% 1.8vh no-repeat}
+.num{position:relative;z-index:1;font:400 22vh/1 'Bebas Neue','Arial Narrow',Impact,sans-serif;color:transparent;-webkit-text-stroke:.35vh var(--gold-lo);opacity:.8;letter-spacing:.02em}
+.txt{position:relative;z-index:1;display:flex;flex-direction:column;gap:1.4vh}
+h1{font:400 40vh/.88 'Bebas Neue','Arial Narrow',Impact,sans-serif;letter-spacing:.05em;color:var(--ivory);text-shadow:0 0 3vh rgba(233,185,73,.25);white-space:nowrap}
+.rule{display:flex;align-items:center;gap:1.2vh}
+.rule i{height:.3vh;width:18vh;background:linear-gradient(90deg,var(--gold),transparent)}
+.rule u{width:1.4vh;height:1.4vh;background:var(--gold);transform:rotate(45deg)}
+p{font:italic 500 13vh/1 'Playfair Display',Georgia,serif;color:var(--gold);letter-spacing:.04em;white-space:nowrap}
+.frames{position:relative;z-index:1;margin-left:auto;display:flex;gap:2.4vh;opacity:.9;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 70%);mask:linear-gradient(90deg,transparent,#000 70%)}
+.frames span{width:44vh;height:58vh;border:.3vh solid rgba(233,185,73,.45);border-radius:.8vh;
+  background:linear-gradient(135deg,rgba(125,15,33,.55),rgba(20,17,26,.9) 60%,rgba(233,185,73,.18))}
+.frames span:nth-child(2){background:linear-gradient(135deg,rgba(16,36,44,.9),rgba(20,17,26,.9) 60%,rgba(233,185,73,.16))}
+.frames span:nth-child(3){background:linear-gradient(135deg,rgba(51,40,26,.9),rgba(20,17,26,.9) 60%,rgba(224,36,63,.2))}
+.ico{position:relative;z-index:1;width:46vh;height:46vh;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#2a1a22,#0f0b0f 70%);border:.5vh solid var(--gold-lo);box-shadow:0 0 5vh rgba(233,185,73,.22),inset 0 0 4vh #000}
+.ico svg{width:46%;height:46%;fill:var(--gold);filter:drop-shadow(0 0 1.4vh rgba(233,185,73,.6))}
+.ico.play svg{fill:var(--play);filter:drop-shadow(0 0 1.4vh rgba(224,36,63,.7));margin-left:7%}
+@media (max-aspect-ratio:5/1){ /* compact (narrow column) */
+  .num,.frames{display:none}.ico{margin-left:auto}.b{padding-left:6vh}h1{font-size:34vh}p{font-size:12vh}.ico{width:40vh;height:40vh}}
+</style>
+</head>
+<body>
+<div class="b">
+  <div class="num" id="n">01</div>
+  <div class="txt"><h1 id="t">Title</h1><div class="rule"><i></i><u></u></div><p id="s">Subtitle</p></div>
+  <div class="frames" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="ico" id="ico"></div>
+</div>
+<script>
+// ponytail: tiny hash-driven template so all 5 banners share one source
+const q=new URLSearchParams(location.hash.slice(1));
+const I={
+ play:'<path d="M8 5v14l11-7z"/>',
+ check:'<path d="M9.5 16.6 5.4 12.5 4 13.9l5.5 5.5L20 8.9 18.6 7.5z"/>',
+ star:'<path d="m12 2 2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/>',
+ ticket:'<path d="M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 0 0 4v3a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-3a2 2 0 0 0 0-4zm8 1v2h4V8zm0 6v2h4v-2z"/>',
+ bars:'<path d="M4 20V10h4v10zm6 0V4h4v16zm6 0v-7h4v7z"/>'};
+const set=(id,v)=>document.getElementById(id).textContent=v;
+set('t',q.get('t')||'Title');set('s',q.get('s')||'');set('n',q.get('n')||'');
+const i=q.get('i')||'play',e=document.getElementById('ico');e.className='ico '+i;
+e.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+(I[i]||I.play)+'</svg>';
+if(!q.get('n'))document.getElementById('n').style.display='none';
+</script>
+</body>
+</html>
